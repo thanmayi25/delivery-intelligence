@@ -1,0 +1,4 @@
+Split Strategy,Evaluation Scenario,Test MAE (min),Test RMSE (min),Test R2
+Temporal (70/15/15),Chronological Future Generalization,93.34,122.0,0.253
+Courier-Grouped Holdout,Cold-Start Generalization to Unseen Couriers,87.41,114.77,-0.1117
+Random (80/20),Uniform Interpolation Baseline,84.99,114.81,0.3128

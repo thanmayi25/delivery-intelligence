@@ -1,0 +1,46 @@
+{
+    "evaluation_samples": 1000,
+    "base_value_minutes": 199.04,
+    "top_features": [
+        {
+            "feature": "delivery_distance_km",
+            "mean_abs_shap_impact_minutes": 28.43
+        },
+        {
+            "feature": "mins_since_recent_completed",
+            "mean_abs_shap_impact_minutes": 13.44
+        },
+        {
+            "feature": "accept_hour",
+            "mean_abs_shap_impact_minutes": 10.43
+        },
+        {
+            "feature": "duration_of_most_recently_completed_task",
+            "mean_abs_shap_impact_minutes": 9.32
+        },
+        {
+            "feature": "tasks_previous_3h",
+            "mean_abs_shap_impact_minutes": 7.06
+        },
+        {
+            "feature": "daily_task_index",
+            "mean_abs_shap_impact_minutes": 6.76
+        },
+        {
+            "feature": "accept_minute",
+            "mean_abs_shap_impact_minutes": 4.16
+        },
+        {
+            "feature": "accept_weekday",
+            "mean_abs_shap_impact_minutes": 2.76
+        },
+        {
+            "feature": "previous_accept_distance_km",
+            "mean_abs_shap_impact_minutes": 2.73
+        },
+        {
+            "feature": "time_period_Morning",
+            "mean_abs_shap_impact_minutes": 1.67
+        }
+    ]
+}

@@ -1,0 +1,88 @@
+{
+    "dataset_name": "Jilin Last-Mile Express Logistics (Cleaned & Point-in-Time)",
+    "total_samples": 30450,
+    "temporal_split": {
+        "train_samples": 21315,
+        "train_date_range": [
+            "1900-05-13 08:41:00",
+            "1900-08-29 09:03:00"
+        ],
+        "val_samples": 4567,
+        "val_date_range": [
+            "1900-08-29 09:03:00",
+            "1900-09-16 08:33:00"
+        ],
+        "test_samples": 4568,
+        "test_date_range": [
+            "1900-09-16 08:33:00",
+            "1900-10-28 08:54:00"
+        ]
+    },
+    "courier_grouped_split": {
+        "train_samples": 22562,
+        "test_samples": 7888,
+        "train_couriers": 42,
+        "test_couriers": 11
+    },
+    "random_split": {
+        "train_samples": 24360,
+        "test_samples": 6090
+    },
+    "high_delay_threshold_minutes": 379.6000000000022,
+    "impute_values": {
+        "duration_of_most_recently_completed_task": 345.0,
+        "mins_since_recent_completed": 849.0,
+        "minutes_since_last_dispatch_today": 0.0,
+        "previous_accept_distance_km": 0.010509009743874653
+    },
+    "feature_cols": [
+        "delivery_distance_km",
+        "tasks_previous_1h",
+        "tasks_previous_3h",
+        "active_inflight_tasks",
+        "daily_task_index",
+        "is_first_task_of_day",
+        "minutes_since_last_dispatch_today",
+        "duration_of_most_recently_completed_task",
+        "has_prior_completed_task",
+        "mins_since_recent_completed",
+        "previous_accept_distance_km",
+        "accept_hour",
+        "accept_minute",
+        "accept_weekday",
+        "is_weekend",
+        "time_period"
+    ],
+    "target_cols": [
+        "delivery_duration_minutes",
+        "high_delay"
+    ],
+    "meta_cols": [
+        "order_id",
+        "courier_id",
+        "region_id",
+        "city",
+        "accept_time",
+        "delivery_time"
+    ],
+    "categorical_cols": [
+        "time_period"
+    ],
+    "numerical_cols": [
+        "delivery_distance_km",
+        "tasks_previous_1h",
+        "tasks_previous_3h",
+        "active_inflight_tasks",
+        "daily_task_index",
+        "is_first_task_of_day",
+        "minutes_since_last_dispatch_today",
+        "duration_of_most_recently_completed_task",
+        "has_prior_completed_task",
+        "mins_since_recent_completed",
+        "previous_accept_distance_km",
+        "accept_hour",
+        "accept_minute",
+        "accept_weekday",
+        "is_weekend"
+    ]
+}

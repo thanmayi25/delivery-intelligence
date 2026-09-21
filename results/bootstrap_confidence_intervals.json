@@ -1,0 +1,73 @@
+{
+    "bootstrap_iterations": 1000,
+    "sample_size": 4568,
+    "regression": {
+        "mae": {
+            "point_estimate": 93.37,
+            "ci_95": [
+                91.1773,
+                95.5826
+            ]
+        },
+        "rmse": {
+            "point_estimate": 122.04,
+            "ci_95": [
+                118.7886,
+                125.2685
+            ]
+        },
+        "r2": {
+            "point_estimate": 0.2521,
+            "ci_95": [
+                0.2263,
+                0.2797
+            ]
+        }
+    },
+    "classification": {
+        "roc_auc": {
+            "point_estimate": 0.7847,
+            "ci_95": [
+                0.765,
+                0.8048
+            ]
+        },
+        "pr_auc": {
+            "point_estimate": 0.3152,
+            "ci_95": [
+                0.2793,
+                0.3514
+            ]
+        },
+        "brier_score": {
+            "point_estimate": 0.086,
+            "ci_95": [
+                0.0801,
+                0.0917
+            ]
+        }
+    },
+    "sequence_association": {
+        "pearson_r": {
+            "point_estimate": 0.1334,
+            "ci_95": [
+                0.1036,
+                0.1607
+            ]
+        },
+        "spearman_rho": {
+            "point_estimate": 0.1244,
+            "ci_95": [
+                0.0951,
+                0.1524
+            ]
+        },
+        "delay_odds_ratio": {
+            "point_estimate": 1.66,
+            "ci_95": [
+                1.3611,
+                2.0061
+            ]
+        }
+    }
+}

@@ -1,0 +1,4 @@
+Split Strategy,Evaluation Scenario,ROC-AUC,PR-AUC,F1-Score,Brier Score
+Temporal (70/15/15),Chronological Future Generalization,0.7886,0.3461,0.3531,0.1906
+Courier-Grouped Holdout,Cold-Start Generalization to Unseen Couriers,0.6822,0.0693,0.0905,0.181
+Random (80/20),Uniform Interpolation Baseline,0.8307,0.3929,0.3943,0.1585

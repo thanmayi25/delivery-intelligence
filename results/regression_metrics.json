@@ -1,0 +1,93 @@
+{
+    "models_benchmark": [
+        {
+            "model_name": "Random Forest Regressor",
+            "mae": 92.36,
+            "rmse": 121.63,
+            "r2": 0.2575,
+            "fit_time_seconds": 1.29
+        },
+        {
+            "model_name": "LightGBM Regressor",
+            "mae": 93.34,
+            "rmse": 122.0,
+            "r2": 0.253,
+            "fit_time_seconds": 0.37
+        },
+        {
+            "model_name": "XGBoost Regressor",
+            "mae": 95.32,
+            "rmse": 124.09,
+            "r2": 0.2271,
+            "fit_time_seconds": 0.43
+        },
+        {
+            "model_name": "Ridge Regression (Baseline)",
+            "mae": 103.67,
+            "rmse": 135.9,
+            "r2": 0.073,
+            "fit_time_seconds": 0.03
+        },
+        {
+            "model_name": "Global Median Baseline",
+            "mae": 106.24,
+            "rmse": 146.2,
+            "r2": -0.0728,
+            "fit_time_seconds": 0.0
+        },
+        {
+            "model_name": "Distance x Hour Bucket Median Baseline",
+            "mae": 106.94,
+            "rmse": 150.39,
+            "r2": -0.1351,
+            "fit_time_seconds": 0.0
+        },
+        {
+            "model_name": "Courier Historical Median Baseline",
+            "mae": 108.71,
+            "rmse": 156.82,
+            "r2": -0.2343,
+            "fit_time_seconds": 0.0
+        }
+    ],
+    "champion_model": "LightGBM Regressor",
+    "champion_test_metrics": {
+        "model_name": "Temporal 70/15/15 Split (Production)",
+        "mae": 93.34,
+        "rmse": 122.0,
+        "r2": 0.253,
+        "fit_time_seconds": 0.0
+    },
+    "quantile_prediction_intervals": {
+        "target_coverage": 80.0,
+        "empirical_coverage_pct": 79.29,
+        "median_interval_width_min": 277.16
+    },
+    "advisory_buffers_min": {
+        "p80_residual_buffer": 174.5,
+        "p90_residual_buffer": 258.9
+    },
+    "split_generalization": [
+        {
+            "Split Strategy": "Temporal (70/15/15)",
+            "Evaluation Scenario": "Chronological Future Generalization",
+            "Test MAE (min)": 93.34,
+            "Test RMSE (min)": 122.0,
+            "Test R2": 0.253
+        },
+        {
+            "Split Strategy": "Courier-Grouped Holdout",
+            "Evaluation Scenario": "Cold-Start Generalization to Unseen Couriers",
+            "Test MAE (min)": 87.41,
+            "Test RMSE (min)": 114.77,
+            "Test R2": -0.1117
+        },
+        {
+            "Split Strategy": "Random (80/20)",
+            "Evaluation Scenario": "Uniform Interpolation Baseline",
+            "Test MAE (min)": 84.99,
+            "Test RMSE (min)": 114.81,
+            "Test R2": 0.3128
+        }
+    ]
+}

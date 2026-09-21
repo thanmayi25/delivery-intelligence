@@ -1,0 +1,5 @@
+model_name,train_mae,test_mae,train_rmse,test_rmse,train_r2,test_r2,fit_time_seconds
+Ridge Regression (Baseline),90.02,89.07,127.85,120.26,0.1903,0.23,0.05
+Random Forest Regressor,64.85,75.19,93.71,107.37,0.565,0.3862,2.08
+XGBoost Regressor,65.22,74.89,93.09,106.24,0.5707,0.3991,1.0
+LightGBM Regressor,68.89,74.59,101.51,105.73,0.4896,0.4048,0.39

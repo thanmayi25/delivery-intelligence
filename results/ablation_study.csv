@@ -1,0 +1,6 @@
+Configuration,Num Features,Regression MAE (min),Regression RMSE (min),Regression R2,Classification ROC-AUC,Classification PR-AUC
+1. Full Feature Matrix (All Features),16,93.61,122.17,0.2509,0.7774,0.342
+2. Ablated: No Sequence Lookups,12,92.79,120.99,0.2654,0.7771,0.4089
+3. Ablated: No Workload & Concurrency,10,94.41,123.31,0.2369,0.7771,0.3251
+4. Ablated: Distance + Temporal Only,6,95.64,124.4,0.2233,0.7538,0.3933
+5. Minimal Baseline: Distance Only,1,100.18,134.96,0.0859,0.7501,0.3309

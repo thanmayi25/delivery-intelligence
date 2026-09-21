@@ -1,0 +1,30 @@
+{
+    "comparison": [
+        {
+            "Model Architecture": "LightGBM (Gradient Boosted Trees)",
+            "Model Paradigm": "Point-in-Time GBDT",
+            "Regression MAE (min)": 93.34,
+            "Regression RMSE (min)": 122.0,
+            "Regression R2": 0.253,
+            "Classification ROC-AUC": 0.7886,
+            "Classification PR-AUC": 0.3461,
+            "Inference Speed (per order)": "0.05 ms",
+            "Hardware Target": "CPU Optimized"
+        },
+        {
+            "Model Architecture": "Deep Sequential DeliveryNet (PyTorch)",
+            "Model Paradigm": "Deep Neural Network",
+            "Regression MAE (min)": 103.0,
+            "Regression RMSE (min)": 142.78,
+            "Regression R2": -0.0232,
+            "Classification ROC-AUC": 0.5892,
+            "Classification PR-AUC": 0.1431,
+            "Inference Speed (per order)": "0.014 ms",
+            "Hardware Target": "CPU / GPU Ready"
+        }
+    ],
+    "training_time_seconds": 19.98,
+    "epochs_trained": 25,
+    "final_train_loss": 3412.9864,
+    "final_val_loss": 3576.3225
+}

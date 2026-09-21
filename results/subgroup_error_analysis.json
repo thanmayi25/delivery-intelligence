@@ -1,0 +1,154 @@
+{
+    "distance_tiers": [
+        {
+            "distance_tier": "< 1.0 km",
+            "sample_count": 1129,
+            "actual_median_dur": 188.0,
+            "pred_median_dur": 172.9984217777189,
+            "mae": 103.608555504433,
+            "mean_signed_bias": 31.138800688057508,
+            "high_delay_rate": 0.20372010628875112
+        },
+        {
+            "distance_tier": "1.0 - 2.5 km",
+            "sample_count": 1548,
+            "actual_median_dur": 160.0,
+            "pred_median_dur": 201.1880754130545,
+            "mae": 76.86794152603424,
+            "mean_signed_bias": -33.95313876148361,
+            "high_delay_rate": 0.0355297157622739
+        },
+        {
+            "distance_tier": "2.5 - 5.0 km",
+            "sample_count": 1785,
+            "actual_median_dur": 192.0,
+            "pred_median_dur": 230.26702441076282,
+            "mae": 97.76873840629725,
+            "mean_signed_bias": -17.00629137269348,
+            "high_delay_rate": 0.0957983193277311
+        },
+        {
+            "distance_tier": "> 5.0 km",
+            "sample_count": 106,
+            "actual_median_dur": 331.5,
+            "pred_median_dur": 326.824647983384,
+            "mae": 149.99839517475604,
+            "mean_signed_bias": 41.13208931810496,
+            "high_delay_rate": 0.4339622641509434
+        }
+    ],
+    "time_periods": [
+        {
+            "time_period": "Afternoon",
+            "sample_count": 259,
+            "actual_median_dur": 70.0,
+            "pred_median_dur": 90.96924571814566,
+            "mae": 58.13128826083889,
+            "mean_signed_bias": -0.3751407532225709,
+            "high_delay_rate": 0.019305019305019305
+        },
+        {
+            "time_period": "Evening",
+            "sample_count": 3,
+            "actual_median_dur": 14.0,
+            "pred_median_dur": 67.60553130513951,
+            "mae": 30.497203636590886,
+            "mean_signed_bias": -5.239817233502119,
+            "high_delay_rate": 0.0
+        },
+        {
+            "time_period": "Morning",
+            "sample_count": 4305,
+            "actual_median_dur": 186.0,
+            "pred_median_dur": 215.61347485824737,
+            "mae": 95.523592255697,
+            "mean_signed_bias": -10.053658511587763,
+            "high_delay_rate": 0.11544715447154472
+        },
+        {
+            "time_period": "Night",
+            "sample_count": 1,
+            "actual_median_dur": 7.0,
+            "pred_median_dur": 13.100659327957345,
+            "mae": 6.100659327957345,
+            "mean_signed_bias": -6.100659327957345,
+            "high_delay_rate": 0.0
+        }
+    ],
+    "inflight_workload_tiers": [
+        {
+            "inflight_tier": "Low (0-3)",
+            "sample_count": 1093,
+            "actual_median_dur": 228.0,
+            "pred_median_dur": 249.08694592009937,
+            "mae": 100.90330380561095,
+            "mean_signed_bias": -0.5140356234324668,
+            "high_delay_rate": 0.1546203110704483
+        },
+        {
+            "inflight_tier": "Medium (4-7)",
+            "sample_count": 982,
+            "actual_median_dur": 180.0,
+            "pred_median_dur": 218.86869640282092,
+            "mae": 86.67425477482884,
+            "mean_signed_bias": -15.680220908564134,
+            "high_delay_rate": 0.09877800407331976
+        },
+        {
+            "inflight_tier": "High (8-15)",
+            "sample_count": 1536,
+            "actual_median_dur": 161.0,
+            "pred_median_dur": 195.76687193182386,
+            "mae": 91.04424026266808,
+            "mean_signed_bias": -13.021817130953286,
+            "high_delay_rate": 0.08984375
+        },
+        {
+            "inflight_tier": "Heavy Wave (16+)",
+            "sample_count": 957,
+            "actual_median_dur": 161.0,
+            "pred_median_dur": 194.65578549016985,
+            "mae": 95.232265724867,
+            "mean_signed_bias": -7.772886600556449,
+            "high_delay_rate": 0.10240334378265413
+        }
+    ],
+    "regions": [
+        {
+            "region_id": 31,
+            "sample_count": 1283,
+            "actual_median_dur": 240.0,
+            "pred_median_dur": 223.46594705142093,
+            "mae": 94.76987434423819,
+            "mean_signed_bias": 25.99806408905175,
+            "high_delay_rate": 0.19251753702260327
+        },
+        {
+            "region_id": 53,
+            "sample_count": 1434,
+            "actual_median_dur": 138.0,
+            "pred_median_dur": 197.4820727100765,
+            "mae": 84.29011573282008,
+            "mean_signed_bias": -30.90188449220183,
+            "high_delay_rate": 0.0502092050209205
+        },
+        {
+            "region_id": 129,
+            "sample_count": 1373,
+            "actual_median_dur": 171.0,
+            "pred_median_dur": 201.92368384890676,
+            "mae": 94.78843587929515,
+            "mean_signed_bias": -18.730379001403247,
+            "high_delay_rate": 0.06846321922796796
+        },
+        {
+            "region_id": 165,
+            "sample_count": 478,
+            "actual_median_dur": 197.0,
+            "pred_median_dur": 238.44622141259327,
+            "mae": 112.50285226731536,
+            "mean_signed_bias": -14.069843000016197,
+            "high_delay_rate": 0.18619246861924685
+        }
+    ]
+}

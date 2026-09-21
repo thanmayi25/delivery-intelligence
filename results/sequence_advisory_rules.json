@@ -1,0 +1,24 @@
+{
+    "metadata": {
+        "engine_version": "2.0-PointInTime",
+        "domain": "Last-Mile Express Logistics",
+        "calibration_source": "Empirical Test Split Residuals & Quantiles"
+    },
+    "completed_duration_thresholds_min": {
+        "critical": 380.0,
+        "elevated": 275.0,
+        "moderate": 175.0
+    },
+    "spatial_jump_thresholds_km": {
+        "high_friction": 2.5,
+        "moderate_friction": 1.0
+    },
+    "active_inflight_thresholds": {
+        "heavy_wave": 15,
+        "moderate_wave": 8
+    },
+    "recommended_buffers_min": {
+        "p80_delay_buffer": 175.0,
+        "p90_delay_buffer": 259.0
+    }
+}

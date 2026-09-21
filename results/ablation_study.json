@@ -1,0 +1,47 @@
+[
+    {
+        "Configuration": "1. Full Feature Matrix (All Features)",
+        "Num Features": 16,
+        "Regression MAE (min)": 93.61,
+        "Regression RMSE (min)": 122.17,
+        "Regression R2": 0.2509,
+        "Classification ROC-AUC": 0.7774,
+        "Classification PR-AUC": 0.342
+    },
+    {
+        "Configuration": "2. Ablated: No Sequence Lookups",
+        "Num Features": 12,
+        "Regression MAE (min)": 92.79,
+        "Regression RMSE (min)": 120.99,
+        "Regression R2": 0.2654,
+        "Classification ROC-AUC": 0.7771,
+        "Classification PR-AUC": 0.4089
+    },
+    {
+        "Configuration": "3. Ablated: No Workload & Concurrency",
+        "Num Features": 10,
+        "Regression MAE (min)": 94.41,
+        "Regression RMSE (min)": 123.31,
+        "Regression R2": 0.2369,
+        "Classification ROC-AUC": 0.7771,
+        "Classification PR-AUC": 0.3251
+    },
+    {
+        "Configuration": "4. Ablated: Distance + Temporal Only",
+        "Num Features": 6,
+        "Regression MAE (min)": 95.64,
+        "Regression RMSE (min)": 124.4,
+        "Regression R2": 0.2233,
+        "Classification ROC-AUC": 0.7538,
+        "Classification PR-AUC": 0.3933
+    },
+    {
+        "Configuration": "5. Minimal Baseline: Distance Only",
+        "Num Features": 1,
+        "Regression MAE (min)": 100.18,
+        "Regression RMSE (min)": 134.96,
+        "Regression R2": 0.0859,
+        "Classification ROC-AUC": 0.7501,
+        "Classification PR-AUC": 0.3309
+    }
+]
