@@ -1,0 +1,24 @@
+{
+    "naive_shift_unfinished_tasks": 27755,
+    "naive_shift_total_prior_tasks": 30397,
+    "naive_shift_unfinished_percentage": 91.30835279797348,
+    "point_in_time_source_leak_count": 0,
+    "point_in_time_source_leak_percentage": 0.0,
+    "single_feature_aucs_test": {
+        "delivery_distance_km": 0.5667169002298724,
+        "tasks_previous_1h": 0.5258547707840551,
+        "tasks_previous_3h": 0.5251294379785334,
+        "active_inflight_tasks": 0.5585763194149129,
+        "daily_task_index": 0.5828065014903495,
+        "is_first_task_of_day": 0.5340722697013226,
+        "minutes_since_last_dispatch_today": 0.5648921774779877,
+        "duration_of_most_recently_completed_task": 0.5814756223507348,
+        "has_prior_completed_task": 0.5080661123337442,
+        "mins_since_recent_completed": 0.5829576431117635,
+        "previous_accept_distance_km": 0.5607697101412354,
+        "accept_hour": 0.5405701346115783,
+        "accept_minute": 0.5043385239171205,
+        "accept_weekday": 0.5424440947474245,
+        "is_weekend": 0.5107768630348257
+    }
+}

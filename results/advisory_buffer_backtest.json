@@ -1,0 +1,8 @@
+{
+    "sample_size": 4568,
+    "ontime_raw_eta_pct": 62.41,
+    "ontime_flat_30min_pct": 70.49,
+    "ontime_flat_60min_pct": 77.06,
+    "ontime_dynamic_sequence_buffer_pct": 82.75,
+    "ontime_p90_quantile_pct": 90.76
+}

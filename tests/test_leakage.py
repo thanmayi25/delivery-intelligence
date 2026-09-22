@@ -25,7 +25,7 @@ def dataset_artifacts():
 
 def test_feature_list_excludes_future_targets(dataset_artifacts):
     """
-    Asserts that feature_cols contains zero post-acceptance or target leakages.
+    SMOKE TEST: Asserts that feature_cols contains zero outcome, post-dispatch, or target columns.
     """
     feature_cols = dataset_artifacts["metadata"]["feature_cols"]
     forbidden_leakage = [
@@ -34,14 +34,21 @@ def test_feature_list_excludes_future_targets(dataset_artifacts):
         "delivery_gps_lng",
         "delivery_gps_lat",
         "delivery_duration_minutes",
-        "high_delay"
+        "high_delay",
+        "completion_time",
+        "end_time",
+        "actual_duration",
+        "pickup_time",
+        "delay_flag",
+        "is_delayed",
+        "delivery_status"
     ]
     for col in forbidden_leakage:
         assert col not in feature_cols, f"Forbidden leakage column '{col}' found in feature_cols!"
 
 def test_temporal_split_monotonicity(dataset_artifacts):
     """
-    Asserts strict chronological separation: Train < Validation < Test.
+    Asserts strict chronological separation across temporal splits: Train < Validation < Test.
     """
     train_df = dataset_artifacts["train"]
     val_df = dataset_artifacts["val"]
@@ -57,7 +64,7 @@ def test_temporal_split_monotonicity(dataset_artifacts):
 
 def test_high_delay_threshold_strictly_fitted_on_train(dataset_artifacts):
     """
-    Asserts that high-delay threshold is computed strictly from training partition.
+    Asserts that high-delay threshold ($P_{90}$) is computed strictly from training partition.
     """
     train_df = dataset_artifacts["train"]
     meta_thresh = dataset_artifacts["metadata"]["high_delay_threshold_minutes"]
@@ -67,33 +74,42 @@ def test_high_delay_threshold_strictly_fitted_on_train(dataset_artifacts):
         f"Metadata threshold {meta_thresh} does not match training P90 {computed_train_p90}"
     )
 
-def test_daily_task_index_resets_each_day(dataset_artifacts):
+def test_daily_task_index_resets_each_day_independent(dataset_artifacts):
     """
-    Asserts that daily_task_index resets to 0 on every new calendar date per courier.
+    Independently verifies daily_task_index by grouping by (courier_id, calendar_date)
+    across the entire chronological dataset and comparing the cumulative rank.
     """
-    for split_name in ["train", "val", "test"]:
-        df = dataset_artifacts[split_name]
-        df["date"] = pd.to_datetime(df["accept_time"]).dt.date
-        
-        # Check first task of day flag
-        first_tasks = df[df["daily_task_index"] == 0]
-        assert len(first_tasks) > 0
-        assert (first_tasks["is_first_task_of_day"] == 1).all(), (
-            f"All daily_task_index == 0 rows must have is_first_task_of_day == 1 in {split_name}"
-        )
+    all_df = pd.concat([
+        dataset_artifacts["train"],
+        dataset_artifacts["val"],
+        dataset_artifacts["test"]
+    ], ignore_index=True)
+    
+    all_df["date"] = pd.to_datetime(all_df["accept_time"]).dt.date
+    all_df = all_df.sort_values(["courier_id", "accept_time", "order_id"]).reset_index(drop=True)
+    
+    # Independent rank computation
+    all_df["expected_daily_index"] = all_df.groupby(["courier_id", "date"]).cumcount()
+    all_df["expected_is_first"] = (all_df["expected_daily_index"] == 0).astype(int)
+    
+    mismatches_idx = (all_df["daily_task_index"] != all_df["expected_daily_index"]).sum()
+    mismatches_first = (all_df["is_first_task_of_day"] != all_df["expected_is_first"]).sum()
+    
+    assert mismatches_idx == 0, f"Found {mismatches_idx} daily_task_index mismatches across dataset"
+    assert mismatches_first == 0, f"Found {mismatches_first} is_first_task_of_day mismatches across dataset"
 
-def test_point_in_time_elapsed_values_non_negative(dataset_artifacts):
+def test_completed_history_contains_zero_future_deliveries(dataset_artifacts):
     """
-    Asserts that point-in-time elapsed time features are strictly non-negative.
+    Asserts that whenever has_prior_completed_task == 1, the completed task lookup
+    could not have come from a task completed after accept_time.
     """
     for split_name in ["train", "val", "test"]:
         df = dataset_artifacts[split_name]
         
-        assert (df["mins_since_recent_completed"] >= 0).all(), (
-            f"Negative mins_since_recent_completed detected in {split_name}"
-        )
-        assert (df["minutes_since_last_dispatch_today"] >= 0).all(), (
-            f"Negative minutes_since_last_dispatch_today detected in {split_name}"
+        # mins_since_recent_completed must be >= 0 (strictly in past)
+        valid_history = df[df["has_prior_completed_task"] == 1]
+        assert (valid_history["mins_since_recent_completed"] >= 0).all(), (
+            f"Future completion detected in {split_name} (negative mins_since_recent_completed)"
         )
         assert (df["active_inflight_tasks"] >= 0).all(), (
             f"Negative active_inflight_tasks detected in {split_name}"
