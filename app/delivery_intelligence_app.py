@@ -246,76 +246,76 @@ advisory_engine = SequenceAdvisoryEngine(rules_path=MODELS_DIR / "sequence_advis
 with st.sidebar:
     st.image("https://img.icons8.com/fluency/96/delivery.png", width=56)
     st.markdown("### **Delivery Intelligence**")
-    st.caption("Last-Mile Express Logistics & Sequence Analytics")
+    st.caption("Smart Express Delivery ETA & Delay Risk Predictor")
     st.markdown("---")
     
     tab_selection = st.radio(
         "Navigation",
         [
-            "🚀 Real-Time Dispatch Simulator",
-            "📁 Batch Dataset Risk Analyzer",
-            "📊 Operational & Model Intelligence"
+            "🚀 Live Delivery Estimator",
+            "📁 Batch Delivery File Analyzer",
+            "📊 Model Performance & Insights"
         ]
     )
     st.markdown("---")
-    st.markdown("**Production Status:**")
-    st.success("🟢 ML System Active (Calibrated LightGBM + Quantiles)")
+    st.markdown("**System Status:**")
+    st.success("🟢 AI Models Ready & Active")
         
     st.markdown("""
-    **Domain Profile:**
-    - **Industry**: Express Parcel Logistics
-    - **Dispatch**: Multi-order Wave Runs
-    - **Median Duration**: 175.0 min (~2.9h)
-    - **P90 Delay Threshold**: 380.0 min
+    **Delivery Profile:**
+    - **Service**: Express Parcel Deliveries
+    - **Dispatch**: Multi-package Delivery Routes
+    - **Typical Delivery Time**: ~2.9 hours (175 min)
+    - **Major Delay Cutoff**: Over 6.3 hours (380 min)
     """)
 
 # ---------------------------------------------------------
-# TAB 1: Real-Time Dispatch Simulator
+# TAB 1: Live Delivery Estimator
 # ---------------------------------------------------------
-if tab_selection == "🚀 Real-Time Dispatch Simulator":
-    st.markdown('<div class="main-header">Real-Time Dispatch Simulator</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sub-header">Simulate live express parcel dispatch scenarios, compute calibrated ETA intervals [P10, P90], evaluate delay breach probabilities, and inspect point-in-time sequence advisories.</div>', unsafe_allow_html=True)
+if tab_selection == "🚀 Live Delivery Estimator":
+    st.markdown('<div class="main-header">Live Delivery Estimator</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sub-header">Calculate estimated delivery times (ETA), see best-to-worst case arrival windows, and get smart warnings before dispatching orders.</div>', unsafe_allow_html=True)
     
     col1, col2 = st.columns([1.1, 0.9], gap="large")
     
     with col1:
-        st.markdown("#### 📋 Dispatch Parameters")
+        st.markdown("#### 📋 Delivery & Driver Details")
         with st.form("dispatch_form"):
-            st.markdown("**1. Package & Spatial Characteristics**")
+            st.markdown("**1. Package & Route Details**")
             c_dist, c_time = st.columns(2)
             with c_dist:
                 delivery_distance_km = st.number_input("Delivery Distance (km)", min_value=0.1, max_value=50.0, value=2.8, step=0.1)
             with c_time:
-                accept_hour = st.slider("Dispatch Hour of Day", 0, 23, 9)
+                accept_hour = st.slider("Departure Hour of Day (0-23)", 0, 23, 9)
                 
             c_min, c_day = st.columns(2)
             with c_min:
-                accept_minute = st.slider("Dispatch Minute", 0, 59, 15)
+                accept_minute = st.slider("Departure Minute (0-59)", 0, 59, 15)
             with c_day:
                 accept_weekday = st.selectbox("Day of Week", options=[0, 1, 2, 3, 4, 5, 6], format_func=lambda x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][x], index=2)
                 
-            st.markdown("**2. Concurrent Courier Workload & Wave Load**")
+            st.markdown("**2. Driver's Current Workload**")
             w1, w2 = st.columns(2)
             with w1:
-                active_inflight_tasks = st.number_input("Active Parcels Currently In-Flight", min_value=0, max_value=50, value=6, help="Orders already accepted and being delivered in this wave")
-                tasks_previous_1h = st.number_input("Orders Accepted in Past 1h", min_value=0, max_value=40, value=2)
+                active_inflight_tasks = st.number_input("Packages Currently Being Carried", min_value=0, max_value=50, value=6, help="How many packages the driver is carrying right now")
+                tasks_previous_1h = st.number_input("Packages Picked Up in Past 1 Hour", min_value=0, max_value=40, value=2)
             with w2:
-                tasks_previous_3h = st.number_input("Orders Accepted in Past 3h", min_value=0, max_value=80, value=6)
-                daily_task_index = st.number_input("Courier's Order Index Today (Shift Count)", min_value=0, max_value=50, value=3)
+                tasks_previous_3h = st.number_input("Packages Picked Up in Past 3 Hours", min_value=0, max_value=80, value=6)
+                daily_task_index = st.number_input("Order Number in Driver's Shift Today", min_value=0, max_value=50, value=3, help="e.g. 3 means this is their 3rd delivery of the day")
                 
-            st.markdown("**3. Point-in-Time Sequence Context (Strict Non-Leaked History)**")
+            st.markdown("**3. Driver's Recent Activity Today**")
             s1, s2 = st.columns(2)
             with s1:
-                has_prior = st.checkbox("Courier has completed at least 1 parcel today", value=True)
-                prev_completed_dur = st.number_input("Duration of Most Recently Completed Task (min)", min_value=10.0, max_value=800.0, value=175.0, step=10.0, disabled=not has_prior)
+                has_prior = st.checkbox("Driver has completed at least 1 delivery today", value=True)
+                prev_completed_dur = st.number_input("How long did their last delivery take? (minutes)", min_value=10.0, max_value=800.0, value=175.0, step=10.0, disabled=not has_prior)
             with s2:
-                mins_since_completed = st.number_input("Minutes Elapsed Since Last Completion", min_value=0.0, max_value=600.0, value=30.0, step=5.0, disabled=not has_prior)
-                prev_jump_km = st.number_input("Distance from Previous Pickup Location (km)", min_value=0.0, max_value=25.0, value=0.5, step=0.1)
+                mins_since_completed = st.number_input("Minutes since their last delivery finished", min_value=0.0, max_value=600.0, value=30.0, step=5.0, disabled=not has_prior)
+                prev_jump_km = st.number_input("Distance to next pickup point (km)", min_value=0.0, max_value=25.0, value=0.5, step=0.1)
                 
-            submit_btn = st.form_submit_button("⚡ Run Calibrated Dispatch Intelligence", use_container_width=True)
+            submit_btn = st.form_submit_button("⚡ Calculate Delivery Time & Risk", use_container_width=True)
             
     with col2:
-        st.markdown("#### 🎯 Prediction & Sequence Advisory Output")
+        st.markdown("#### 🎯 Delivery Predictions & Dispatch Advice")
         
         time_period = assign_time_period(accept_hour)
         is_weekend = 1 if accept_weekday >= 5 else 0
@@ -340,115 +340,112 @@ if tab_selection == "🚀 Real-Time Dispatch Simulator":
             "time_period": time_period
         }])
         
-        if reg_model and clf_model:
-            pred_duration = float(reg_model.predict(input_data)[0])
-            pred_duration = max(1.0, pred_duration)
+        pred_duration = float(reg_model.predict(input_data)[0])
+        pred_duration = max(1.0, pred_duration)
+        
+        # Quantile Prediction Intervals
+        p10 = float(max(0.0, quant_models.predict_quantile(input_data, "p10")[0]))
+        p50 = float(max(0.0, quant_models.predict_quantile(input_data, "p50")[0]))
+        p90 = float(max(p10, quant_models.predict_quantile(input_data, "p90")[0]))
             
-            # Quantile Prediction Intervals
-            if quant_models and "p10" in quant_models and "p90" in quant_models:
-                p10 = float(max(0.0, quant_models["p10"].predict(input_data)[0]))
-                p50 = float(max(0.0, quant_models["p50"].predict(input_data)[0]))
-                p90 = float(max(p10, quant_models["p90"].predict(input_data)[0]))
-            else:
-                p10, p50, p90 = pred_duration * 0.5, pred_duration, pred_duration * 1.8
-                
-            pred_delay_prob = float(clf_model.predict_proba(input_data)[0][1])
-            is_delayed = bool(pred_delay_prob >= 0.20)
-            
-            # Sequence Advisory
-            advisory = advisory_engine.evaluate_task_sequence(
-                prev_completed_duration=float(prev_completed_dur if has_prior else 345.0),
-                jump_dist_km=float(prev_jump_km),
-                active_inflight=int(active_inflight_tasks),
-                current_distance_km=float(delivery_distance_km),
-                workload_1h=int(tasks_previous_1h)
-            )
-            
-            # Top metrics cards
-            m1, m2 = st.columns(2)
-            with m1:
-                st.markdown(f"""
-                <div class="metric-card">
-                    <div class="metric-label">Estimated Delivery Duration (ETA)</div>
-                    <div class="metric-value">{pred_duration:.0f} <span style="font-size: 1rem; color: #64748b;">min</span></div>
-                    <div style="font-size: 0.85rem; color: #0284c7; margin-top: 4px;">≈ {pred_duration/60.0:.2f} hours</div>
-                </div>
-                """, unsafe_allow_html=True)
-            with m2:
-                st.markdown(f"""
-                <div class="metric-card">
-                    <div class="metric-label">Calibrated Delay Risk (>380m)</div>
-                    <div class="metric-value" style="color: {'#dc2626' if pred_delay_prob >= 0.35 else ('#f97316' if pred_delay_prob >= 0.20 else '#16a34a')};">{pred_delay_prob*100:.1f}%</div>
-                    <div style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">Threshold Flag: <strong>{'BREACH RISK' if is_delayed else 'NORMAL'}</strong></div>
-                </div>
-                """, unsafe_allow_html=True)
-                
-            # Calibrated Prediction Interval Card
+        pred_delay_prob = float(clf_model.predict_proba(input_data)[0][1])
+        is_delayed = bool(pred_delay_prob >= 0.20)
+        
+        # Sequence Advisory
+        advisory = advisory_engine.evaluate_task_sequence(
+            prev_completed_duration=float(prev_completed_dur if has_prior else 345.0),
+            jump_dist_km=float(prev_jump_km),
+            active_inflight=int(active_inflight_tasks),
+            current_distance_km=float(delivery_distance_km),
+            workload_1h=int(tasks_previous_1h)
+        )
+        
+        # Top metrics cards
+        m1, m2 = st.columns(2)
+        with m1:
             st.markdown(f"""
-            <div class="metric-card" style="border-left: 4px solid #2563eb;">
-                <div class="metric-label">Calibrated 80% Prediction Interval [P10, P90]</div>
-                <div style="font-size: 1.25rem; font-weight: 700; color: #1e293b; margin-top: 4px;">
-                    {p10:.0f} min &nbsp;──►&nbsp; <span style="color: #2563eb;">{p50:.0f} min (Median)</span> &nbsp;──►&nbsp; {p90:.0f} min
-                </div>
-                <div style="font-size: 0.82rem; color: #64748b; margin-top: 4px;">
-                    Empirical test coverage: <strong>79.3%</strong> across test deliveries.
-                </div>
+            <div class="metric-card">
+                <div class="metric-label">Estimated Delivery Time (ETA)</div>
+                <div class="metric-value">{pred_duration:.0f} <span style="font-size: 1rem; color: #64748b;">min</span></div>
+                <div style="font-size: 0.85rem; color: #0284c7; margin-top: 4px;">≈ {pred_duration/60.0:.1f} hours</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with m2:
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-label">Chance of Major Delay (>6.3 hrs)</div>
+                <div class="metric-value" style="color: {'#dc2626' if pred_delay_prob >= 0.35 else ('#f97316' if pred_delay_prob >= 0.20 else '#16a34a')};">{pred_delay_prob*100:.1f}%</div>
+                <div style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">Status: <strong>{'HIGH DELAY RISK' if is_delayed else 'NORMAL (ON TRACK)'}</strong></div>
             </div>
             """, unsafe_allow_html=True)
             
-            st.markdown("---")
-            st.markdown("##### 🧭 Sequence Advisory & Risk Tier")
-            
-            tier_class = "badge-optimal"
-            if advisory["risk_tier"] == "CRITICAL RISK":
-                tier_class = "badge-critical"
-            elif advisory["risk_tier"] == "HIGH RISK":
-                tier_class = "badge-high"
-            elif advisory["risk_tier"] == "MODERATE RISK":
-                tier_class = "badge-moderate"
-                
-            st.markdown(f"""
-            <div style="margin-bottom: 12px;">
-                <span class="badge-pill {tier_class}">{advisory['risk_tier']} (Score: {advisory['risk_score']}/100)</span>
+        # Calibrated Prediction Interval Card
+        st.markdown(f"""
+        <div class="metric-card" style="border-left: 4px solid #2563eb;">
+            <div class="metric-label">Estimated Time Range (80% Confidence Window)</div>
+            <div style="font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-top: 4px;">
+                {p10:.0f} min (Fastest 10%) &nbsp;──►&nbsp; <span style="color: #2563eb;">{p50:.0f} min (Expected)</span> &nbsp;──►&nbsp; {p90:.0f} min (Slowest 10%)
             </div>
-            """, unsafe_allow_html=True)
+            <div style="font-size: 0.82rem; color: #64748b; margin-top: 4px;">
+                8 out of 10 deliveries finish within this time range.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("---")
+        st.markdown("##### 🧭 Driver Status & Smart Advice")
+        
+        tier_class = "badge-optimal"
+        if "High" in advisory["risk_tier"]:
+            tier_class = "badge-critical"
+        elif "Elevated" in advisory["risk_tier"]:
+            tier_class = "badge-high"
+        elif "Moderate" in advisory["risk_tier"]:
+            tier_class = "badge-moderate"
             
-            for adv in advisory["advisories"]:
-                st.info(adv)
-                
-            # Gauge chart for calibrated probability
-            fig = go.Figure(go.Indicator(
-                mode = "gauge+number",
-                value = pred_delay_prob * 100,
-                domain = {'x': [0, 1], 'y': [0, 1]},
-                title = {'text': "Calibrated Delay Risk Probability (%)", 'font': {'size': 13}},
-                gauge = {
-                    'axis': {'range': [None, 100], 'tickwidth': 1},
-                    'bar': {'color': "#2563eb"},
-                    'steps': [
-                        {'range': [0, 20], 'color': "#dcfce7"},
-                        {'range': [20, 35], 'color': "#fef9c3"},
-                        {'range': [35, 100], 'color': "#fee2e2"}
-                    ],
-                    'threshold': {
-                        'line': {'color': "red", 'width': 3},
-                        'thickness': 0.75,
-                        'value': 20.0
-                    }
+        st.markdown(f"""
+        <div style="margin-bottom: 12px;">
+            <span class="badge-pill {tier_class}">{advisory['risk_tier']} (Risk Score: {advisory['risk_score']}/100)</span>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        for adv in advisory["advisories"]:
+            st.info(adv)
+            
+        # Gauge chart for calibrated probability
+        fig = go.Figure(go.Indicator(
+            mode = "gauge+number",
+            value = pred_delay_prob * 100,
+            domain = {'x': [0, 1], 'y': [0, 1]},
+            title = {'text': "Delay Risk Meter (%)", 'font': {'size': 13}},
+            gauge = {
+                'axis': {'range': [None, 100], 'tickwidth': 1},
+                'bar': {'color': "#2563eb"},
+                'steps': [
+                    {'range': [0, 20], 'color': "#dcfce7"},
+                    {'range': [20, 35], 'color': "#fef9c3"},
+                    {'range': [35, 100], 'color': "#fee2e2"}
+                ],
+                'threshold': {
+                    'line': {'color': "red", 'width': 3},
+                    'thickness': 0.75,
+                    'value': 20.0
                 }
-            ))
-            fig.update_layout(height=190, margin=dict(l=20, r=20, t=25, b=20))
-            st.plotly_chart(fig, use_container_width=True)
+            }
+        ))
+        fig.update_layout(height=190, margin=dict(l=20, r=20, t=25, b=20))
+        st.plotly_chart(fig, use_container_width=True)
 
 # ---------------------------------------------------------
-# TAB 2: Batch Dataset Risk Analyzer
 # ---------------------------------------------------------
-elif tab_selection == "📁 Batch Dataset Risk Analyzer":
-    st.markdown('<div class="main-header">Batch Dataset Risk Analyzer</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sub-header">Upload express parcel delivery datasets (CSV / Parquet). The pipeline standardizes schemas, computes point-in-time sequence features, and executes batch calibrated inference with prediction intervals.</div>', unsafe_allow_html=True)
+# TAB 2: Batch Delivery File Analyzer
+# ---------------------------------------------------------
+elif tab_selection == "📁 Batch Delivery File Analyzer":
+    st.markdown('<div class="main-header">Batch Delivery File Analyzer</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sub-header">Upload a spreadsheet of delivery orders (CSV or Parquet) to calculate estimated delivery times, arrival windows, and delay warnings for all orders in bulk.</div>', unsafe_allow_html=True)
     
-    uploaded_file = st.file_uploader("Upload Delivery Dataset (.csv or .parquet)", type=["csv", "parquet"])
-    use_sample = st.button("📂 Or Load Sample Test Partition (Jilin Test Split, 500 records)")
+    uploaded_file = st.file_uploader("Upload Delivery File (.csv or .parquet)", type=["csv", "parquet"])
+    use_sample = st.button("📂 Or Load 500 Sample Deliveries (Test Data)")
     
     df_raw = None
     if uploaded_file is not None:
@@ -467,7 +464,7 @@ elif tab_selection == "📁 Batch Dataset Risk Analyzer":
             st.info("Loaded 500 test records from Jilin test partition.")
             
     if df_raw is not None:
-        st.markdown("#### 1. Ingested Data Preview")
+        st.markdown("#### 1. Uploaded Data Preview")
         st.dataframe(df_raw.head(5), use_container_width=True)
         
         cols = df_raw.columns.tolist()
@@ -493,8 +490,8 @@ elif tab_selection == "📁 Batch Dataset Risk Analyzer":
             if c not in processed_df.columns:
                 processed_df[c] = def_v
                 
-        if st.button("🚀 Execute Calibrated Batch Inference", use_container_width=True):
-            with st.spinner(f"Executing LightGBM models & quantile regressors on {len(processed_df):,} records..."):
+        if st.button("🚀 Calculate Delivery Times for All Orders", use_container_width=True):
+            with st.spinner(f"Running predictions on {len(processed_df):,} orders..."):
                 feature_cols = [
                     "delivery_distance_km", "tasks_previous_1h", "tasks_previous_3h", "active_inflight_tasks",
                     "daily_task_index", "is_first_task_of_day", "minutes_since_last_dispatch_today",
@@ -519,23 +516,23 @@ elif tab_selection == "📁 Batch Dataset Risk Analyzer":
                 
                 k1, k2, k3, k4 = st.columns(4)
                 with k1:
-                    st.metric("Total Evaluated Orders", f"{len(processed_df):,}")
+                    st.metric("Total Orders Evaluated", f"{len(processed_df):,}")
                 with k2:
-                    st.metric("Mean Predicted Duration", f"{processed_df['pred_duration_min'].mean():.1f} min")
+                    st.metric("Average Delivery Time", f"{processed_df['pred_duration_min'].mean():.1f} min")
                 with k3:
-                    st.metric("High-Delay Risk Orders", f"{int(processed_df['high_delay_flag'].sum()):,}")
+                    st.metric("Orders with High Delay Risk", f"{int(processed_df['high_delay_flag'].sum()):,}")
                 with k4:
-                    st.metric("Mean Calibrated Risk", f"{processed_df['calibrated_delay_prob'].mean()*100:.1f}%")
+                    st.metric("Average Delay Risk", f"{processed_df['calibrated_delay_prob'].mean()*100:.1f}%")
                     
                 v1, v2 = st.columns(2)
                 with v1:
-                    fig_dur = px.histogram(processed_df, x="pred_duration_min", nbins=30, title="Predicted Duration Distribution (min)", color_discrete_sequence=["#2563eb"])
+                    fig_dur = px.histogram(processed_df, x="pred_duration_min", nbins=30, title="Predicted Delivery Time Distribution (Minutes)", color_discrete_sequence=["#2563eb"])
                     st.plotly_chart(fig_dur, use_container_width=True)
                 with v2:
-                    fig_p = px.scatter(processed_df.head(200), x="delivery_distance_km", y="pred_duration_min", color="calibrated_delay_prob", title="Duration vs Distance (Color = Delay Prob)", color_continuous_scale="Viridis")
+                    fig_p = px.scatter(processed_df.head(200), x="delivery_distance_km", y="pred_duration_min", color="calibrated_delay_prob", title="Delivery Distance vs Expected Delivery Time", color_continuous_scale="Viridis")
                     st.plotly_chart(fig_p, use_container_width=True)
                     
-                st.markdown("#### 3. Detailed Predictions Table")
+                st.markdown("#### 3. Delivery Predictions Summary Table")
                 disp_cols = [c for c in ["order_id", "courier_id", "delivery_distance_km", "pred_duration_min", "p10_min", "p90_min", "calibrated_delay_prob", "high_delay_flag"] if c in processed_df.columns]
                 st.dataframe(processed_df[disp_cols].head(200), use_container_width=True)
                 
@@ -543,18 +540,18 @@ elif tab_selection == "📁 Batch Dataset Risk Analyzer":
                 st.download_button("📥 Download Predictions CSV", data=csv_data, file_name="batch_predictions.csv", mime="text/csv")
 
 # ---------------------------------------------------------
-# TAB 3: Operational & Model Intelligence
+# TAB 3: Model Performance & Insights
 # ---------------------------------------------------------
-elif tab_selection == "📊 Operational & Model Intelligence":
-    st.markdown('<div class="main-header">Operational & Model Intelligence</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sub-header">Empirical validation, non-causal sequence dynamics, multi-split generalization, TreeSHAP explainability, and 1,000-iteration bootstrap confidence intervals.</div>', unsafe_allow_html=True)
+elif tab_selection == "📊 Model Performance & Insights":
+    st.markdown('<div class="main-header">Model Performance & Insights</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sub-header">Explore how the AI models perform on real delivery data, understand how driver history influences delays, and inspect key drivers behind delivery times.</div>', unsafe_allow_html=True)
     
     boot_data = results_data.get("bootstrap_confidence_intervals.json", {})
     reg_data = results_data.get("regression_metrics.json", {})
     cls_data = results_data.get("classification_metrics.json", {})
     
     # Executive Insights Loaded Dynamically
-    st.markdown("### 📌 Dynamically Bound Empirical Findings")
+    st.markdown("### 📌 Key Real-World Findings")
     c1, c2, c3 = st.columns(3)
     
     with c1:
@@ -563,10 +560,10 @@ elif tab_selection == "📊 Operational & Model Intelligence":
         r_val = boot_data.get("sequence_association", {}).get("pearson_r", {}).get("point_estimate", 0.133)
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-label">1. Point-in-Time Sequence Association</div>
-            <div style="font-size: 1.25rem; font-weight: 700; color: #dc2626; margin-top: 6px;">{or_val}x Delay Odds Ratio</div>
+            <div class="metric-label">1. Impact of Driver History</div>
+            <div style="font-size: 1.25rem; font-weight: 700; color: #dc2626; margin-top: 6px;">{or_val}x Higher Delay Chance</div>
             <div style="font-size: 0.83rem; color: #64748b; margin-top: 4px;">
-                95% CI: [{or_ci[0]}, {or_ci[1]}]. Non-leaked Pearson r = {r_val}. If prior completed task was delayed, subsequent delay odds increase by ~66%.
+                95% CI: [{or_ci[0]}, {or_ci[1]}]. When a driver experiences a delay on their prior delivery, their next delivery is 66% more likely to be delayed.
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -576,10 +573,10 @@ elif tab_selection == "📊 Operational & Model Intelligence":
         p80_buf = reg_data.get("advisory_buffers_min", {}).get("p80_residual_buffer", 174.5)
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-label">2. Calibrated Uncertainty Bounds</div>
-            <div style="font-size: 1.25rem; font-weight: 700; color: #2563eb; margin-top: 6px;">{cov_pct}% Interval Coverage</div>
+            <div class="metric-label">2. Reliable Arrival Windows</div>
+            <div style="font-size: 1.25rem; font-weight: 700; color: #2563eb; margin-top: 6px;">{cov_pct}% Window Accuracy</div>
             <div style="font-size: 0.83rem; color: #64748b; margin-top: 4px;">
-                Quantile regressors [P10, P90] match target 80% coverage. Data-driven delay buffer: +{p80_buf:.0f} min from test residual distribution.
+                The estimated [Fastest to Slowest] time windows successfully capture 8 out of 10 actual delivery arrivals.
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -589,10 +586,10 @@ elif tab_selection == "📊 Operational & Model Intelligence":
         ece_cal = cls_data.get("calibration", {}).get("isotonic_ece", 0.0292)
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-label">3. Probability Calibration</div>
-            <div style="font-size: 1.25rem; font-weight: 700; color: #16a34a; margin-top: 6px;">10x ECE Error Reduction</div>
+            <div class="metric-label">3. Accurate Risk Percentages</div>
+            <div style="font-size: 1.25rem; font-weight: 700; color: #16a34a; margin-top: 6px;">10x Better Probability Accuracy</div>
             <div style="font-size: 0.83rem; color: #64748b; margin-top: 4px;">
-                Calibration dropped Expected Calibration Error from {ece_uncal:.3f} to {ece_cal:.3f} (Isotonic fit on validation split).
+                Probability calibration dropped error from {ece_uncal:.3f} to {ece_cal:.3f}. Predicted delay % closely reflects real-world rates.
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -600,51 +597,51 @@ elif tab_selection == "📊 Operational & Model Intelligence":
     st.markdown("---")
     
     # Section 2: Visual Diagnostics
-    st.markdown("### 📈 Visual Diagnostics & Empirical Distributions")
+    st.markdown("### 📈 Performance Visualizations & Charts")
     g1, g2 = st.columns(2)
     with g1:
         p_img = RESULTS_DIR / "regression_performance_and_intervals.png"
         if p_img.exists():
-            st.image(str(p_img), caption="Actual vs Predicted Duration & Calibrated [P10, P90] Intervals", use_container_width=True)
+            st.image(str(p_img), caption="Actual vs Predicted Delivery Time & [P10, P90] Confidence Windows", use_container_width=True)
     with g2:
         c_img = RESULTS_DIR / "classification_calibration_and_roc.png"
         if c_img.exists():
-            st.image(str(c_img), caption="ROC Curves & Reliability Calibration Diagram", use_container_width=True)
+            st.image(str(c_img), caption="Delay Risk ROC Curves & Probability Reliability Diagram", use_container_width=True)
             
     g3, g4 = st.columns(2)
     with g3:
         b_img = RESULTS_DIR / "bootstrap_distributions.png"
         if b_img.exists():
-            st.image(str(b_img), caption="1,000-Sample Bootstrap Distributions (MAE, ROC-AUC, Sequence r)", use_container_width=True)
+            st.image(str(b_img), caption="1,000-Iteration Bootstrap Statistical Distributions (MAE, ROC-AUC, Sequence r)", use_container_width=True)
     with g4:
         s_img = RESULTS_DIR / "subgroup_error_analysis.png"
         if s_img.exists():
-            st.image(str(s_img), caption="Subgroup Error Diagnostics across Distance, Shift Time, and Load", use_container_width=True)
+            st.image(str(s_img), caption="Subgroup Error Breakdown across Distance, Time of Day, and Load", use_container_width=True)
             
     st.markdown("---")
     
     # Section 3: TreeSHAP Explainability
-    st.markdown("### 🧠 TreeSHAP Feature Attribution & Global Impact")
+    st.markdown("### 🧠 Key Factors Influencing Delivery Times (SHAP Analysis)")
     sh1, sh2 = st.columns(2)
     with sh1:
         sh_bee = SHAP_DIR / "shap_beeswarm.png"
         if sh_bee.exists():
-            st.image(str(sh_bee), caption="Global TreeSHAP Beeswarm Attribution", use_container_width=True)
+            st.image(str(sh_bee), caption="Global TreeSHAP Feature Impact on Delivery Time", use_container_width=True)
     with sh2:
         sh_bar = SHAP_DIR / "shap_summary_bar.png"
         if sh_bar.exists():
-            st.image(str(sh_bar), caption="Mean Absolute SHAP Feature Impact (Minutes)", use_container_width=True)
+            st.image(str(sh_bar), caption="Average Impact of Each Factor (in Minutes)", use_container_width=True)
             
     st.markdown("---")
     
     # Section 4: Multi-Split & Ablation Tables
-    with st.expander("🛠️ View Comprehensive Evaluation Tables (Split Generalization, Baselines & Ablation)", expanded=True):
-        st.markdown("#### 1. Multi-Split Generalization Benchmark")
+    with st.expander("🛠️ View Detailed Benchmark Tables & Model Comparisons", expanded=True):
+        st.markdown("#### 1. Multi-City & Split Generalization Benchmark")
         sp_path = RESULTS_DIR / "regression_split_comparison.csv"
         if sp_path.exists():
             st.dataframe(pd.read_csv(sp_path), use_container_width=True)
             
-        st.markdown("#### 2. Feature Ablation Benchmark")
+        st.markdown("#### 2. Feature Importance & Ablation Benchmark")
         ab_path = RESULTS_DIR / "ablation_study.csv"
         if ab_path.exists():
             st.dataframe(pd.read_csv(ab_path), use_container_width=True)
@@ -660,11 +657,12 @@ elif tab_selection == "📊 Operational & Model Intelligence":
             if cc_path.exists():
                 st.dataframe(pd.read_csv(cc_path), use_container_width=True)
 
-        st.markdown("#### 4. Gradient Boosted Trees (LightGBM) vs. Deep Sequential Neural Network (PyTorch)")
+        st.markdown("#### 4. Gradient Boosted Trees (LightGBM) vs. Deep Neural Network (PyTorch)")
         dl_path = RESULTS_DIR / "deep_learning_benchmark.csv"
         if dl_path.exists():
             st.dataframe(pd.read_csv(dl_path), use_container_width=True)
         dl_img = RESULTS_DIR / "deep_sequential_training_curves.png"
         if dl_img.exists():
-            st.image(str(dl_img), caption="Deep Sequential DeliveryNet (PyTorch Huber+BCE Training & Validation Losses)", use_container_width=True)
+            st.image(str(dl_img), caption="Deep Sequential DeliveryNet (PyTorch Huber+BCE Training Curves)", use_container_width=True)
+
 
